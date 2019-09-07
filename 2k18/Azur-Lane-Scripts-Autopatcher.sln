@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azur-Lane-Scripts-Autopatcher", "Azur-Lane-Scripts-Autopatcher\Azur-Lane-Scripts-Autopatcher.csproj", "{E8BA395A-536D-4752-B99C-E7C9D7540A16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azcli", "Azcli\Azcli.csproj", "{6E3BECDF-F4E7-4A25-B29B-67E7AC4B0A45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8BA395A-536D-4752-B99C-E7C9D7540A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8BA395A-536D-4752-B99C-E7C9D7540A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8BA395A-536D-4752-B99C-E7C9D7540A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8BA395A-536D-4752-B99C-E7C9D7540A16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E3BECDF-F4E7-4A25-B29B-67E7AC4B0A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E3BECDF-F4E7-4A25-B29B-67E7AC4B0A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E3BECDF-F4E7-4A25-B29B-67E7AC4B0A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E3BECDF-F4E7-4A25-B29B-67E7AC4B0A45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47E91C85-B7ED-4CC8-80D6-26F0165A60C6}
+	EndGlobalSection
+EndGlobal
