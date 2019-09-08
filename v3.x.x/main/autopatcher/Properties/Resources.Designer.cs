@@ -19,7 +19,7 @@ namespace Azurlane.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -79,7 +79,7 @@ namespace Azurlane.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://raw.githubusercontent.com/k0np4ku/Azur-Lane-Autopatcher/master/src/main/autopatcher/status.txt.
+        ///   Looks up a localized string similar to https://raw.githubusercontent.com/k0np4ku/Archive-Azur-Lane-Scripts-Autopatcher/master/v3.x.x/main/autopatcher/status.txt.
         /// </summary>
         internal static string AutopatcherStatus {
             get {
@@ -88,7 +88,7 @@ namespace Azurlane.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://raw.githubusercontent.com/k0np4ku/Azur-Lane-Autopatcher/master/src/main/autopatcher/version.txt.
+        ///   Looks up a localized string similar to https://raw.githubusercontent.com/k0np4ku/Archive-Azur-Lane-Scripts-Autopatcher/master/v3.x.x/main/autopatcher/version.txt.
         /// </summary>
         internal static string AutopatcherVersion {
             get {
@@ -98,21 +98,21 @@ namespace Azurlane.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to [Common]
-        ///Version=2018.11.28.01
-        ///DevelopmentMode=false
+        ///Version=v3.0.1
+        ///DevelopmentMode=true
         ///
         ///[Path]
         ///Tmp=tmp
         ///Thirdparty=3rdparty
         ///
         ///[Mods]
-        ///GodMode=true
+        ///GodMode=false
         ///WeakEnemy=false
         ///GodMode+Damage=false
         ///GodMode+Cooldown=false
         ///GodMode+WeakEnemy=false
         ///GodMode+Damage+Cooldown=false
-        ///GodMode+Damage+WeakEnemy=false
+        ///GodMode+Damage+WeakEnemy=true
         ///GodMode+Damage+Cooldown+WeakEnemy=false
         ///
         ///[Aircraft]
@@ -126,11 +126,12 @@ namespace Azurlane.Properties {
         ///Speed=ignore
         ///
         ///[Weapon]
-        ///Damage=325
+        ///Damage=300
         ///ReloadMax=120
         ///
         ///[Enemy]
-        ///AntiAir=ignor [rest of string was truncated]&quot;;.
+        ///AntiAir=ignore
+        ///AntiA [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Configuration {
             get {
