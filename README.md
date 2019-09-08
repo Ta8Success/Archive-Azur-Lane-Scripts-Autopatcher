@@ -1,3 +1,5 @@
 # Archive of old Azur Lane Scripts Autopatcher
-**2k18** is an archive of the old autopatcher\
-**2k19** is an archive of an autopatcher which I've never fully publish to github
+Archive repository of the old Autopatcher
+
+**v2.x.x** contains the source code of old autopatcher (2018)
+**v3.x.x** contains the source code of an autopatcher which I've never fully publish to github (2019)

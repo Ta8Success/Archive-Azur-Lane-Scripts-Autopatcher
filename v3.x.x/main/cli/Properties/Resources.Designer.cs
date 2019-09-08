@@ -19,7 +19,7 @@ namespace Azurlane.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -70,7 +70,7 @@ namespace Azurlane.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://raw.githubusercontent.com/k0np4ku/Azur-Lane-Autopatcher/master/src/main/cli/status.txt.
+        ///   Looks up a localized string similar to https://raw.githubusercontent.com/k0np4ku/Archive-Azur-Lane-Scripts-Autopatcher/master/2k19/main/cli/status.txt.
         /// </summary>
         internal static string CliStatus {
             get {
@@ -79,7 +79,7 @@ namespace Azurlane.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://raw.githubusercontent.com/k0np4ku/Azur-Lane-Autopatcher/master/src/main/cli/version.txt.
+        ///   Looks up a localized string similar to https://raw.githubusercontent.com/k0np4ku/Archive-Azur-Lane-Scripts-Autopatcher/master/2k19/main/cli/version.txt.
         /// </summary>
         internal static string CliVersion {
             get {

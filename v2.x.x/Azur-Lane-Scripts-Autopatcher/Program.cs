@@ -20,18 +20,19 @@ namespace Azurlane
         internal static int ExceptionCount;
         internal static List<Action> ListOfAction;
         internal static List<string> ListOfLua, ListOfMod;
+        internal static string DirName = "CAB-android32";
 
         private static void Clean(string fileName)
         {
             try
             {
                 if (File.Exists(PathMgr.Temp(fileName))) File.Delete(PathMgr.Temp(fileName));
-                if (Directory.Exists(PathMgr.Lua(fileName).Replace("\\CAB-android", ""))) Utils.Rmdir(PathMgr.Lua(fileName).Replace("\\CAB-android", ""));
+                if (Directory.Exists(PathMgr.Lua(fileName).Replace($"\\{DirName}", ""))) Utils.Rmdir(PathMgr.Lua(fileName).Replace($"\\{DirName}", ""));
 
                 foreach (var mod in ListOfMod)
                 {
                     if (File.Exists(PathMgr.Temp(mod))) File.Delete(PathMgr.Temp(mod));
-                    if (Directory.Exists(PathMgr.Lua(mod).Replace("\\CAB-android", ""))) Utils.Rmdir(PathMgr.Lua(mod).Replace("\\CAB-android", ""));
+                    if (Directory.Exists(PathMgr.Lua(mod).Replace($"\\{DirName}", ""))) Utils.Rmdir(PathMgr.Lua(mod).Replace($"\\{DirName}", ""));
                 }
             }
             catch (Exception e)
@@ -216,7 +217,7 @@ namespace Azurlane
                             try {
                                 Utils.pInfof("Cleaning...");
                                 if (File.Exists(PathMgr.Temp(fileName))) File.Delete(PathMgr.Temp(fileName));
-                                if (Directory.Exists(PathMgr.Lua(fileName).Replace("\\CAB-android", ""))) Utils.Rmdir(PathMgr.Lua(fileName).Replace("\\CAB-android", ""));
+                                if (Directory.Exists(PathMgr.Lua(fileName).Replace($"\\{DirName}", ""))) Utils.Rmdir(PathMgr.Lua(fileName).Replace($"\\{DirName}", ""));
                                 Console.Write(" <Done>\n");
                             }
                             catch (Exception e)
