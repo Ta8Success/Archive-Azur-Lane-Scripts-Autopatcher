@@ -6,7 +6,6 @@ namespace Azurlane
     internal static class PathMgr
     {
         private const string AssetsRoot = "Unity_Assets_Files";
-        private const string Type = "CAB-android";
 
         internal static string Local(string path = null)
         {
@@ -22,7 +21,7 @@ namespace Azurlane
 
         internal static string Assets(string name) => Path.Combine(Temp(AssetsRoot), name);
 
-        internal static string Lua(string name) => Path.Combine(Path.Combine(Assets(), name), Type);
+        internal static string Lua(string name) => Path.Combine(Path.Combine(Assets(), name), Program.DirName);
 
         internal static string Lua(string name, string lua) => Path.Combine(Lua(name), lua);
 

@@ -25,7 +25,7 @@ namespace Azurlane
         internal static bool Abort;
         internal static List<string> ListOfLua;
         internal static Dictionary<Mods, bool> ListOfMod;
-        internal static string DirName;
+        internal static string DirName = "CAB-android32";
 
         private static List<Action> _listOfAction;
 
@@ -134,13 +134,13 @@ namespace Azurlane
             try
             {
                 if (File.Exists(PathMgr.Temp(fileName))) File.Delete(PathMgr.Temp(fileName));
-                if (Directory.Exists(PathMgr.Lua(fileName).Replace("\\CAB-android", ""))) Utils.Rmdir(PathMgr.Lua(fileName).Replace("\\CAB-android", ""));
+                if (Directory.Exists(PathMgr.Lua(fileName).Replace($"\\{DirName}", ""))) Utils.Rmdir(PathMgr.Lua(fileName).Replace($"\\{DirName}", ""));
 
                 foreach (var mod in ListOfMod.Keys)
                 {
                     var modName = "scripts-" + mod.ToString().ToLower().Replace("_", "-");
                     if (File.Exists(PathMgr.Temp(modName))) File.Delete(PathMgr.Temp(modName));
-                    if (Directory.Exists(PathMgr.Lua(modName).Replace("\\CAB-android", ""))) Utils.Rmdir(PathMgr.Lua(modName).Replace("\\CAB-android", ""));
+                    if (Directory.Exists(PathMgr.Lua(modName).Replace($"\\{DirName}", ""))) Utils.Rmdir(PathMgr.Lua(modName).Replace($"\\{DirName}", ""));
                 }
             }
             catch (Exception e)
@@ -361,7 +361,7 @@ namespace Azurlane
                         try {
                             Utils.LogInfo("Cleaning...", true, false);
                             if (File.Exists(PathMgr.Temp(fileName))) File.Delete(PathMgr.Temp(fileName));
-                            if (Directory.Exists(PathMgr.Lua(fileName).Replace("\\CAB-android", ""))) Utils.Rmdir(PathMgr.Lua(fileName).Replace("\\CAB-android", ""));
+                            if (Directory.Exists(PathMgr.Lua(fileName).Replace($"\\{DirName}", ""))) Utils.Rmdir(PathMgr.Lua(fileName).Replace($"\\{DirName}", ""));
                             Utils.Write(" <done>", false, true);
                         }
                         catch (Exception e)
