@@ -26,7 +26,7 @@ namespace Azurlane
         internal static bool Abort;
         internal static List<string> ListOfLua;
         internal static Dictionary<Mods, bool> ListOfMod;
-        internal static string DirName = "CAB-android64";
+        internal static string DirName = "CAB-android32";
 
         private static List<Action> _listOfAction;
 
@@ -164,6 +164,7 @@ namespace Azurlane
                 ListOfLua = new List<string>();
 
             ConfigMgr.Initialize();
+
             Message();
             CheckVersion();
             CheckDependencies();
@@ -339,25 +340,25 @@ namespace Azurlane
                             Utils.LogInfo("Cloning Lua & AssetBundle", true, false);
                             foreach (var mod in ListOfMod)
                             {
-                                if (!mod.Value)
-                                    break;
-
-                                var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
-
-                                if (!Directory.Exists(PathMgr.Lua(modName)))
-                                    Directory.CreateDirectory(PathMgr.Lua(modName));
-
-                                foreach (var lua in ListOfLua)
+                                if (mod.Value)
                                 {
-                                    if (File.Exists(PathMgr.Lua(fileName, lua)))
+                                    var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
+
+                                    if (!Directory.Exists(PathMgr.Lua(modName)))
+                                        Directory.CreateDirectory(PathMgr.Lua(modName));
+
+                                    foreach (var lua in ListOfLua)
                                     {
-                                        File.Copy(PathMgr.Lua(fileName, lua), PathMgr.Lua(modName, lua), true);
+                                        if (File.Exists(PathMgr.Lua(fileName, lua)))
+                                        {
+                                            File.Copy(PathMgr.Lua(fileName, lua), PathMgr.Lua(modName, lua), true);
+                                        }
                                     }
-                                }
 
-                                if (File.Exists(PathMgr.Temp(fileName)))
-                                {
-                                    File.Copy(PathMgr.Temp(fileName), PathMgr.Temp(modName), true);
+                                    if (File.Exists(PathMgr.Temp(fileName)))
+                                    {
+                                        File.Copy(PathMgr.Temp(fileName), PathMgr.Temp(modName), true);
+                                    }
                                 }
                             }
                             Utils.Write(" <done>", false, true);
@@ -403,14 +404,14 @@ namespace Azurlane
                             var tasks = new List<Task>();
                             foreach (var mod in ListOfMod)
                             {
-                                if (!mod.Value)
-                                    break;
-
-                                var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
-                                foreach (var lua in ListOfLua) {
-                                    tasks.Add(Task.Factory.StartNew(() =>
-                                    {
-                                    }));
+                                if (mod.Value)
+                                {
+                                    var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
+                                    foreach (var lua in ListOfLua) {
+                                        tasks.Add(Task.Factory.StartNew(() =>
+                                        {
+                                        }));
+                                    }
                                 }
                             }
                             Task.WaitAll(tasks.ToArray());
@@ -429,20 +430,20 @@ namespace Azurlane
                             Utils.LogInfo("Encrypting Lua...", true, false);
                             foreach (var mod in ListOfMod)
                             {
-                                if (!mod.Value)
-                                    break;
+                                if (mod.Value)
+                                {
+                                    var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
 
-                                var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
+                                    foreach (var lua in ListOfLua) {
+                                        Utils.Command($"Azcli.exe --dev --lock \"{PathMgr.Lua(modName, lua)}\"");
 
-                                foreach (var lua in ListOfLua) {
-                                    Utils.Command($"Azcli.exe --dev --lock \"{PathMgr.Lua(modName, lua)}\"");
+                                        if (LuaMgr.CheckLuaState(PathMgr.Lua(modName, lua)) != LuaMgr.State.Decrypted)
+                                            break;
 
-                                    if (LuaMgr.CheckLuaState(PathMgr.Lua(modName, lua)) != LuaMgr.State.Decrypted)
-                                        break;
-
-                                    Console.WriteLine();
-                                    Utils.LogDebug($"Failed to encrypt {mod}/{Path.GetFileName(lua)}...", true, true);
-                                    showDoneMessage = false;
+                                        Console.WriteLine();
+                                        Utils.LogDebug($"Failed to encrypt {mod}/{Path.GetFileName(lua)}...", true, true);
+                                        showDoneMessage = false;
+                                    }
                                 }
                             }
                             if (showDoneMessage)
@@ -462,17 +463,17 @@ namespace Azurlane
                             var tasks = new List<Task>();
                             foreach (var mod in ListOfMod)
                             {
-                                if (!mod.Value)
-                                    break;
-
-                                var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
-
-                                tasks.Add(Task.Factory.StartNew(() =>
+                                if (mod.Value)
                                 {
-                                    Utils.Command($"Azcli.exe --dev --repack \"{PathMgr.Temp(modName)}\"");
-                                    Utils.Write($@" {index}/{ListOfMod.Count(x => x.Value)}", false, false);
-                                    index++;
-                                }));
+                                    var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
+
+                                    tasks.Add(Task.Factory.StartNew(() =>
+                                    {
+                                        Utils.Command($"Azcli.exe --dev --repack \"{PathMgr.Temp(modName)}\"");
+                                        Utils.Write($@" {index}/{ListOfMod.Count(x => x.Value)}", false, false);
+                                        index++;
+                                    }));
+                                }
                             }
                             Task.WaitAll(tasks.ToArray());
                             Utils.Write(" <done>", false, true);
@@ -489,11 +490,11 @@ namespace Azurlane
                             Utils.LogInfo("Encrypting AssetBundle...", true, false);
                             foreach (var mod in ListOfMod)
                             {
-                                if (!mod.Value)
-                                    break;
-
-                                var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
-                                Utils.Command($"Azcli.exe --dev --encrypt \"{PathMgr.Temp(modName)}\"");
+                                if (mod.Value)
+                                {
+                                    var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
+                                    Utils.Command($"Azcli.exe --dev --encrypt \"{PathMgr.Temp(modName)}\"");
+                                }
                             }
                             Utils.Write(" <done>", false, true);
                         }
@@ -509,15 +510,15 @@ namespace Azurlane
                             Utils.LogInfo("Copying modified AssetBundle to original location...", true, false);
                             foreach (var mod in ListOfMod)
                             {
-                                if (!mod.Value)
-                                    break;
+                                if (mod.Value)
+                                {
+                                    var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
 
-                                var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
+                                    if (File.Exists(Path.Combine(fileDirectoryPath, modName)))
+                                        File.Delete(Path.Combine(fileDirectoryPath, modName));
 
-                                if (File.Exists(Path.Combine(fileDirectoryPath, modName)))
-                                    File.Delete(Path.Combine(fileDirectoryPath, modName));
-
-                                File.Copy(PathMgr.Temp(modName), Path.Combine(fileDirectoryPath, modName));
+                                    File.Copy(PathMgr.Temp(modName), Path.Combine(fileDirectoryPath, modName));
+                                }
                             }
                             Utils.Write(" <done>", false, true);
                         }
