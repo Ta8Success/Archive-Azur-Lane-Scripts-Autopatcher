@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,7 +26,7 @@ namespace Azurlane
         internal static bool Abort;
         internal static List<string> ListOfLua;
         internal static Dictionary<Mods, bool> ListOfMod;
-        internal static string DirName = "CAB-android32";
+        internal static string DirName = "CAB-android64";
 
         private static List<Action> _listOfAction;
 
@@ -177,7 +178,10 @@ namespace Azurlane
             }
 
             if ((bool)ConfigMgr.GetValue(ConfigMgr.Key.ReplaceSkin))
+            {
                 AddLua(Properties.Resources.Ship);
+                AddLua(Properties.Resources.ShipSkin);
+            }
 
             if ((bool)ConfigMgr.GetValue(ConfigMgr.Key.RemoveSkill))
                 AddLua(Properties.Resources.EnemySkill);
@@ -261,7 +265,7 @@ namespace Azurlane
                     {
                         try {
                             Utils.LogInfo("Decrypting AssetBundle...", true, false);
-                            //Utils.Command($"Azcmd.exe --dev --decrypt \"{PathMgr.Temp(fileName)}\"");
+                            Utils.Command($"Azcli.exe --dev --decrypt \"{PathMgr.Temp(fileName)}\"");
                             Utils.Write(" <done>", false, true);
                         }
                         catch (Exception e)
@@ -274,7 +278,7 @@ namespace Azurlane
                     {
                         try {
                             Utils.LogInfo("Unpacking AssetBundle...", true, false);
-                            Utils.Command($"Azcmd.exe --dev --unpack \"{PathMgr.Temp(fileName)}\"");
+                            Utils.Command($"Azcli.exe --dev --unpack \"{PathMgr.Temp(fileName)}\"");
                             Utils.Write(" <done>", false, true);
                         }
                         catch (Exception e)
@@ -289,7 +293,7 @@ namespace Azurlane
                             var showDoneMessage = true;
                             Utils.LogInfo("Decrypting Lua...", true, false);
                             foreach (var lua in ListOfLua) {
-                                Utils.Command($"Azcmd.exe --dev --unlock \"{PathMgr.Lua(fileName, lua)}\"");
+                                Utils.Command($"Azcli.exe --dev --unlock \"{PathMgr.Lua(fileName, lua)}\"");
 
                                 if (LuaMgr.CheckLuaState(PathMgr.Lua(fileName, lua)) != LuaMgr.State.Encrypted)
                                     break;
@@ -315,7 +319,7 @@ namespace Azurlane
                             foreach (var lua in ListOfLua) {
                                 tasks.Add(Task.Factory.StartNew(() =>
                                 {
-                                    Utils.Command($"Azcmd.exe --dev --decompile \"{PathMgr.Lua(fileName, lua)}\"");
+                                    Utils.Command($"Azcli.exe --dev --decompile \"{PathMgr.Lua(fileName, lua)}\"");
                                     Utils.Write($@" {index}/{ListOfLua.Count}", false, false);
                                     index++;
                                 }));
@@ -344,9 +348,17 @@ namespace Azurlane
                                     Directory.CreateDirectory(PathMgr.Lua(modName));
 
                                 foreach (var lua in ListOfLua)
-                                    File.Copy(PathMgr.Lua(fileName, lua), PathMgr.Lua(modName, lua), true);
+                                {
+                                    if (File.Exists(PathMgr.Lua(fileName, lua)))
+                                    {
+                                        File.Copy(PathMgr.Lua(fileName, lua), PathMgr.Lua(modName, lua), true);
+                                    }
+                                }
 
-                                File.Copy(PathMgr.Temp(fileName), PathMgr.Temp(modName), true);
+                                if (File.Exists(PathMgr.Temp(fileName)))
+                                {
+                                    File.Copy(PathMgr.Temp(fileName), PathMgr.Temp(modName), true);
+                                }
                             }
                             Utils.Write(" <done>", false, true);
                         }
@@ -358,7 +370,8 @@ namespace Azurlane
                     },
                     () =>
                     {
-                        try {
+                        try
+                        {
                             Utils.LogInfo("Cleaning...", true, false);
                             if (File.Exists(PathMgr.Temp(fileName))) File.Delete(PathMgr.Temp(fileName));
                             if (Directory.Exists(PathMgr.Lua(fileName).Replace($"\\{DirName}", ""))) Utils.Rmdir(PathMgr.Lua(fileName).Replace($"\\{DirName}", ""));
@@ -374,7 +387,7 @@ namespace Azurlane
                     {
                         try {
                             Utils.LogInfo("Rewriting Lua...", true, false);
-                            Utils.Command("Rewriter.exe");
+                            Utils.Command("Azrewriter.exe");
                             Utils.Write(" <done>", false, true);
                         }
                         catch (Exception e)
@@ -422,7 +435,7 @@ namespace Azurlane
                                 var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
 
                                 foreach (var lua in ListOfLua) {
-                                    Utils.Command($"Azcmd.exe --dev --lock \"{PathMgr.Lua(modName, lua)}\"");
+                                    Utils.Command($"Azcli.exe --dev --lock \"{PathMgr.Lua(modName, lua)}\"");
 
                                     if (LuaMgr.CheckLuaState(PathMgr.Lua(modName, lua)) != LuaMgr.State.Decrypted)
                                         break;
@@ -441,6 +454,7 @@ namespace Azurlane
                             Utils.LogException("Exception detected during encrypting Lua", e);
                         }
                     },
+                    DevMode,
                     () =>
                     {
                         try {
@@ -455,7 +469,7 @@ namespace Azurlane
 
                                 tasks.Add(Task.Factory.StartNew(() =>
                                 {
-                                    Utils.Command($"Azcmd.exe --dev --repack \"{PathMgr.Temp(modName)}\"");
+                                    Utils.Command($"Azcli.exe --dev --repack \"{PathMgr.Temp(modName)}\"");
                                     Utils.Write($@" {index}/{ListOfMod.Count(x => x.Value)}", false, false);
                                     index++;
                                 }));
@@ -479,7 +493,7 @@ namespace Azurlane
                                     break;
 
                                 var modName = ("scripts-" + mod.Key).ToLower().Replace("_", "-");
-                                Utils.Command($"Azcmd.exe --dev --encrypt \"{PathMgr.Temp(modName)}\"");
+                                Utils.Command($"Azcli.exe --dev --encrypt \"{PathMgr.Temp(modName)}\"");
                             }
                             Utils.Write(" <done>", false, true);
                         }
@@ -523,6 +537,8 @@ namespace Azurlane
                     if (Abort)
                         break;
                     index = 1;
+
+                    action.Invoke();
                 }
             }
             finally
@@ -546,6 +562,40 @@ namespace Azurlane
             Utils.Write("Press any key to exit...", true, true);
             Console.ReadKey();
         }
+        private static void DevMode()
+        {
+            if ((bool)ConfigMgr.GetValue(ConfigMgr.Key.DevelopmentMode))
+            {
+                string text = PathMgr.Temp("dev");
+                string text2 = PathMgr.Temp("dev", "raw");
+                string path = PathMgr.Local("raw.zip");
+                if (Directory.Exists(text))
+                {
+                    Utils.Rmdir(text);
+                }
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                Directory.CreateDirectory(text);
+                Directory.CreateDirectory(text2);
+                foreach (KeyValuePair<Mods, bool> keyValuePair in Program.ListOfMod)
+                {
+                    if (keyValuePair.Value)
+                    {
+                        string name = "scripts-" + keyValuePair.Key.ToString().ToLower().Replace("_", "-");
+                        string path2 = keyValuePair.Key.ToString().ToLower().Replace("_", "-");
+                        Directory.CreateDirectory(Path.Combine(text2, path2));
+                        foreach (string text3 in Directory.GetFiles(PathMgr.Assets(name), "*.*", SearchOption.AllDirectories))
+                        {
+                            File.Copy(text3, Path.Combine(Path.Combine(text2, path2), Path.GetFileName(text3)));
+                        }
+                    }
+                }
+                ZipFile.CreateFromDirectory(text, "raw.zip");
+            }
+        }
+
 
         private static void Message()
         {
