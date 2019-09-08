@@ -121,10 +121,10 @@
     <value>github.com/k0np4ku</value>
   </data>
   <data name="CliStatus" xml:space="preserve">
-    <value>https://raw.githubusercontent.com/k0np4ku/Azur-Lane-Autopatcher/master/src/main/cli/status.txt</value>
+    <value>https://raw.githubusercontent.com/k0np4ku/Archive-Azur-Lane-Scripts-Autopatcher/master/2k19/main/cli/status.txt</value>
   </data>
   <data name="CliVersion" xml:space="preserve">
-    <value>https://raw.githubusercontent.com/k0np4ku/Azur-Lane-Autopatcher/master/src/main/cli/version.txt</value>
+    <value>https://raw.githubusercontent.com/k0np4ku/Archive-Azur-Lane-Scripts-Autopatcher/master/2k19/main/cli/version.txt</value>
   </data>
   <data name="LjdNotFoundMessage" xml:space="preserve">
     <value>Not found: LuaJIT Raw-Bytecode Decompiler (ljd)</value>

@@ -176,10 +176,10 @@ namespace Azurlane
                 AddLua(Properties.Resources.Weapon);
             }
 
-            if ((bool)ConfigMgr.GetValue(ConfigMgr.Key.Replace_Skin))
+            if ((bool)ConfigMgr.GetValue(ConfigMgr.Key.ReplaceSkin))
                 AddLua(Properties.Resources.Ship);
 
-            if ((bool)ConfigMgr.GetValue(ConfigMgr.Key.Remove_Skill))
+            if ((bool)ConfigMgr.GetValue(ConfigMgr.Key.RemoveSkill))
                 AddLua(Properties.Resources.EnemySkill);
         }
 
